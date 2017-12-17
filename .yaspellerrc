@@ -7,6 +7,7 @@
   "dictionary": [
     "isomorphic",
     "JSDoc",
-    "docdash"
+    "docdash",
+    "Versioning"
   ]
 }
