@@ -25,3 +25,22 @@ nanomerge({ clone: true })({ a: 1 }, { b: 2 }) // { a: 1, b: 2 }
 ```
 
 ### Configuration
+
+```js
+var config = {
+  /* Deep copying */
+  clone: true, // boolean
+
+  /* Strategy */
+  strategy: {
+    array: 'replace' // string: merge | replace | concat
+  }
+};
+
+// Create instance
+var customMerge = merge(config);
+
+// Used it
+merge({ a: 1 }, { b: 2 })
+merge({ c: 2 }, { d: 3 })
+```
