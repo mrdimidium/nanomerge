@@ -36,3 +36,19 @@ it('Merge array', function () {
 
   expect(merge(a, b)).toEqual(b)
 })
+
+it('Merge nested objects and array', function () {
+  var a = { key: { nested: '5', arr: [1, 2, 3] }, g: null }
+  var b = { key: { nested: '8', arr: [4, 5] } }
+
+  var result = merge({
+    strategy: {
+      array: 'concat'
+    }
+  })(a, b)
+
+  expect(result).toEqual({
+    g: null,
+    key: { nested: '8', arr: [1, 2, 3, 4, 5] }
+  })
+})
