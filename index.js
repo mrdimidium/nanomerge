@@ -1,35 +1,6 @@
-var nanoclone = require('nanoclone')
+var merge = require('./merge')
 
-var mergers = require('./mergers')
 var LibError = require('./lib-error')
-
-function merge () {
-  function merger (a, b) {
-    if (b === void 0) {
-      return nanoclone(a)
-    }
-
-    if (a === void 0) {
-      return nanoclone(b)
-    }
-
-    for (var i = mergers.length - 1; i >= 0; --i) {
-      if (mergers[i].is(a) && mergers[i].is(b)) {
-        return mergers[i].merge[mergers[i].default](merger, a, b)
-      }
-    }
-
-    return nanoclone(b)
-  }
-
-  return function () {
-    var elements = Array.from(arguments)
-
-    return elements.reduce(function (result, element) {
-      return merger(result, element)
-    })
-  }
-}
 
 function wrapper () {
   var args = Array.from(arguments)
@@ -41,11 +12,16 @@ function wrapper () {
     )
   }
 
-  var config = {}
+  // Default values
+  var config = {
+    clone: true,
+
+    strategy: {}
+  }
 
   // custom config
   if (args.length === 1) {
-    config = merge(config, args[0])
+    config = Object.assign(config, args[0])
 
     return merge(config)
   }
