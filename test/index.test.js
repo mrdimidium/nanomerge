@@ -19,6 +19,13 @@ it('Merging 3 flat objects', function () {
   expect(merge({ a: 1 }, { b: 2 }, { c: 3 })).toEqual({ a: 1, b: 2, c: 3 })
 })
 
+it('Merge nested objects', function () {
+  var a = { key: { nested: '5' }, str: 'string' }
+  var b = { key: { nested: '8', g: 7 } }
+
+  expect(merge(a, b)).toEqual({ key: { nested: '8', g: 7 }, str: 'string' })
+})
+
 it('Load custom config', function () {
   expect(merge({})({ a: 1 }, { b: 2 }, { c: 3 })).toEqual({ a: 1, b: 2, c: 3 })
 })
