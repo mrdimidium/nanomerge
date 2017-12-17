@@ -7,10 +7,32 @@
   "license": "MIT",
   "repository": "nikolay-govorov/nanomerge",
   "devDependencies": {
-    "jest": "^21.2.1"
+    "docdash": "^0.4.0",
+    "eslint": "^4.13.1",
+    "eslint-config-logux": "^17.0.0",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-es5": "^1.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jest": "^21.5.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-security": "^1.4.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "jest": "^21.2.1",
+    "jsdoc": "^3.5.5",
+    "lint-staged": "^6.0.0",
+    "pre-commit": "^1.2.2",
+    "rimraf": "^2.6.2",
+    "size-limit": "^0.13.2",
+    "yaspeller-ci": "^1.0.0"
   },
   "scripts": {
-    "test": "jest --coverage"
+    "lint-staged": "lint-staged",
+    "spellcheck": "yarn docs && yaspeller-ci *.md docs/*.html",
+    "clean": "rimraf docs/ coverage/",
+    "docs": "jsdoc --configure .jsdocrc *.js",
+    "lint": "eslint *.js test/*.js",
+    "test": "jest --coverage && yarn lint && size-limit && yarn spellcheck"
   },
   "jest": {
     "coverageThreshold": {
@@ -18,5 +40,24 @@
         "statements": 100
       }
     }
-  }
+  },
+  "eslintConfig": {
+    "extends": "eslint-config-logux/browser",
+    "rules": {
+      "yoda": "off"
+    }
+  },
+  "size-limit": [
+    {
+      "path": "index.js",
+      "limit": "237 B"
+    }
+  ],
+  "lint-staged": {
+    "*.md": "yaspeller-ci",
+    "*.js": "eslint"
+  },
+  "pre-commit": [
+    "lint-staged"
+  ]
 }
