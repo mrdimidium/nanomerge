@@ -1,14 +1,23 @@
-var mergers = require('../mergers')
+var types = require('../types')
+var LibError = require('../lib-error')
 
-function findMerger (name) {
-  return mergers.find(function (el) { return el.name === name })
+function findType (name) {
+  return types.find(function (el) { return el.name === name })
 }
+
+it('Primitive', function () {
+  var type = findType('primitive')
+
+  expect(type.merge.default(
+    function () { throw new LibError() }, [], [5, 2, 3]
+  )).toEqual([5, 2, 3])
+})
 
 describe('Object', function () {
   it('deep', function () {
-    var merger = findMerger('object')
+    var type = findType('object')
 
-    expect(merger.merge.deep(
+    expect(type.merge.deep(
       function (a, b) { return (a || 0) + (b || 0) },
       { a: 5, b: 2 },
       { a: 5, b: 2, c: 3 }
@@ -18,7 +27,7 @@ describe('Object', function () {
 
 describe('Array', function () {
   it('merge', function () {
-    var merger = findMerger('array')
+    var merger = findType('array')
 
     expect(merger.merge.merge(
       function (a, b) { return (a || 0) + (b || 0) },
@@ -28,7 +37,7 @@ describe('Array', function () {
   })
 
   it('replace', function () {
-    var merger = findMerger('array')
+    var merger = findType('array')
 
     expect(merger.merge.replace(
       function () {},
@@ -38,7 +47,7 @@ describe('Array', function () {
   })
 
   it('concat', function () {
-    var merger = findMerger('array')
+    var merger = findType('array')
 
     expect(merger.merge.concat(function () {}, [1, 2], [3, 4, 5]))
       .toEqual([1, 2, 3, 4, 5])

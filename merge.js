@@ -1,6 +1,6 @@
 var nanoclone = require('nanoclone')
 
-var mergers = require('./mergers')
+var types = require('./types')
 var LibError = require('./lib-error')
 
 function merge (config) {
@@ -11,40 +11,39 @@ function merge (config) {
   // Validate config
   if (config.strategy) {
     Object.keys(config.strategy).forEach(function (strategyName) {
-      var strategyMerger = mergers.find(function (m) {
-        return m.name === strategyName
+      var type = types.find(function (t) {
+        return t.name === strategyName
       })
 
-      if (strategyMerger) {
-        var mergerName = config.strategy[strategyName]
+      if (type) {
+        var strategy = config.strategy[strategyName]
 
-        if (!strategyMerger.merge[mergerName]) {
+        if (!type.merge[strategy]) {
           throw new LibError(
-            'Configuration error. Merger ' + mergerName + ' not found'
+            'Configuration error. Strategy ' + strategyName + ' not found'
           )
         }
       } else {
         throw new LibError(
-          'Configuration error. Strategy ' + strategyName + ' not found'
+          'Configuration error. Type ' + type + ' not found'
         )
       }
     })
   }
 
+  // merger
   function merger (a, b) {
     if (b === void 0) {
       return nanoclone(a)
     }
 
-    if (a === void 0) {
-      return nanoclone(b)
-    }
+    for (var i = types.length - 1; i >= 0; --i) {
+      var type = types[i]
 
-    for (var i = mergers.length - 1; i >= 0; --i) {
-      if (mergers[i].is(a) && mergers[i].is(b)) {
-        var method = config.strategy[mergers[i].name] || mergers[i].default
+      if (type.is(a) && type.is(b)) {
+        var strategy = config.strategy[type.name] || type.default
 
-        return mergers[i].merge[method](merger, a, b)
+        return type.merge[strategy](merger, a, b)
       }
     }
 

@@ -1,6 +1,24 @@
 var nanoclone = require('nanoclone')
 
-var mergers = [
+var types = [
+  {
+    name: 'primitive',
+
+    is: function (el) {
+      var type = typeof el
+
+      return (type === 'number' || type === 'string' || type === 'boolean')
+    },
+
+    default: 'default',
+
+    merge: {
+      default: function (merger, a, b) {
+        return b
+      }
+    }
+  },
+
   {
     name: 'object',
 
@@ -59,4 +77,4 @@ var mergers = [
   }
 ]
 
-module.exports = mergers
+module.exports = types

@@ -38,3 +38,12 @@ it('Merger not found', function () {
 
   expect(merge.bind(null, config)).toThrow(LibError)
 })
+
+it('No strategy values', function () {
+  var config = {
+    strategy: {}
+  }
+
+  expect(merge(config)({ a: null }, { b: undefined }))
+    .toEqual({ a: null, b: undefined })
+})
