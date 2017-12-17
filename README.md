@@ -1,5 +1,9 @@
 # Nano Merge
 
+[![Build Status](https://travis-ci.org/nikolay-govorov/nanomerge.svg?branch=master)](https://travis-ci.org/nikolay-govorov/nanomerge)
+[![License](https://img.shields.io/npm/l/nanomerge.svg)](https://www.npmjs.com/package/nanomerge)
+[![GitHub package version](https://img.shields.io/github/package-json/v/nikolay-govorov/nanomerge.svg)](https://github.com/nikolay-govorov/nanomerge)
+
 Tiny universal isomorphic library for deep merging objects
 
 ```js
