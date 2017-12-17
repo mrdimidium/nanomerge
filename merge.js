@@ -9,25 +9,27 @@ function merge (config) {
   }
 
   // Validate config
-  Object.keys(config.strategy).forEach(function (strategyName) {
-    var strategyMerger = mergers.find(function (m) {
-      return m.name === strategyName
-    })
+  if (config.strategy) {
+    Object.keys(config.strategy).forEach(function (strategyName) {
+      var strategyMerger = mergers.find(function (m) {
+        return m.name === strategyName
+      })
 
-    if (strategyMerger) {
-      var mergerName = config.strategy[strategyName]
+      if (strategyMerger) {
+        var mergerName = config.strategy[strategyName]
 
-      if (!strategyMerger.merge[mergerName]) {
+        if (!strategyMerger.merge[mergerName]) {
+          throw new LibError(
+            'Configuration error. Merger ' + mergerName + ' not found'
+          )
+        }
+      } else {
         throw new LibError(
-          'Configuration error. Merger ' + mergerName + ' not found'
+          'Configuration error. Strategy ' + strategyName + ' not found'
         )
       }
-    } else {
-      throw new LibError(
-        'Configuration error. Strategy ' + strategyName + ' not found'
-      )
-    }
-  })
+    })
+  }
 
   function merger (a, b) {
     if (b === void 0) {
