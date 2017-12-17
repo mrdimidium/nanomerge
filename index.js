@@ -4,7 +4,7 @@ function merge(config) {
   return function () {
     var elements = Array.from(arguments);
 
-    return Object.assign.apply(null, elements);
+    return Object.assign.apply(null, ([{}]).concat(elements));
   }
 }
 
