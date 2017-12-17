@@ -6,6 +6,9 @@
   "author": "Nikolay Govorov <nikolay_govorov@bk.ru>",
   "license": "MIT",
   "repository": "nikolay-govorov/nanomerge",
+  "dependencies": {
+    "nanoclone": "^0.1.2"
+  },
   "devDependencies": {
     "docdash": "^0.4.0",
     "eslint": "^4.13.1",
@@ -50,7 +53,7 @@
   "size-limit": [
     {
       "path": "index.js",
-      "limit": "237 B"
+      "limit": "512 B"
     }
   ],
   "lint-staged": {
