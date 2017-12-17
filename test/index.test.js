@@ -15,6 +15,10 @@ it('Clone elements', function () {
   expect(b).toEqual({ key: 3 })
 })
 
+it('Load custom config', function () {
+  expect(merge({})({ a: 1 }, { b: 2 }, { c: 3 })).toEqual({ a: 1, b: 2, c: 3 })
+})
+
 it('Merging 3 flat objects', function () {
   expect(merge({ a: 1 }, { b: 2 }, { c: 3 })).toEqual({ a: 1, b: 2, c: 3 })
 })
@@ -26,6 +30,9 @@ it('Merge nested objects', function () {
   expect(merge(a, b)).toEqual({ key: { nested: '8', g: 7 }, str: 'string' })
 })
 
-it('Load custom config', function () {
-  expect(merge({})({ a: 1 }, { b: 2 }, { c: 3 })).toEqual({ a: 1, b: 2, c: 3 })
+it('Merge array', function () {
+  var a = [1, 2, 3, 4]
+  var b = [5, 6, 7]
+
+  expect(merge(a, b)).toEqual(b)
 })

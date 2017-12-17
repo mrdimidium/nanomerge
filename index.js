@@ -2,36 +2,56 @@ var nanoclone = require('nanoclone')
 
 var LibError = require('./lib-error')
 
-var mergers = {
-  object: function (merger, a, b) {
-    var result = {}
+var mergers = [
+  {
+    is: function (el) {
+      return typeof el === 'object'
+    },
 
-    var keys = {
-      a: Object.keys(a),
-      b: Object.keys(b)
+    merge: function (merger, a, b) {
+      var result = {}
+
+      var keys = {
+        a: Object.keys(a),
+        b: Object.keys(b)
+      }
+
+      keys.a.concat(keys.b).forEach(function (key) {
+        result[key] = merger(a[key], b[key])
+      })
+
+      return result
     }
+  },
 
-    keys.a.concat(keys.b).forEach(function (key) {
-      result[key] = merger(a[key], b[key])
-    })
+  {
+    is: function (el) {
+      return Array.isArray(el)
+    },
 
-    return result
+    merge: function (merger, a, b) {
+      return nanoclone(b)
+    }
   }
-}
+]
 
 function merge () {
   function merger (a, b) {
-    if (!b) {
+    if (b === void 0) {
       return nanoclone(a)
     }
 
-    var type = typeof b
-
-    if (!a || (typeof a) !== (typeof b) || !mergers[type]) {
+    if (a === void 0) {
       return nanoclone(b)
     }
 
-    return mergers[type](merger, a, b)
+    for (var i = mergers.length - 1; i >= 0; --i) {
+      if (mergers[i].is(a) && mergers[i].is(b)) {
+        return mergers[i].merge(merger, a, b)
+      }
+    }
+
+    return nanoclone(b)
   }
 
   return function () {
@@ -39,7 +59,7 @@ function merge () {
 
     return elements.reduce(function (result, element) {
       return merger(result, element)
-    }, {})
+    })
   }
 }
 
