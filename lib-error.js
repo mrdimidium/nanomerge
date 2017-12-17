@@ -1,12 +1,12 @@
-function LibError(message) {
-  Error.apply(this, arguments) ;
+function LibError (message) {
+  Error.apply(this, arguments)
 
-  this.name = 'NanoMergeError';
-  this.message = '[nanomerge]: ' + message;
+  this.name = 'NanoMergeError'
+  this.message = '[nanomerge]: ' + message
 }
 
-LibError.prototype = Object.create(Error.prototype);
+LibError.prototype = Object.create(Error.prototype)
 
-LibError.prototype.constructor = LibError;
+LibError.prototype.constructor = LibError
 
-module.exports = LibError;
+module.exports = LibError
