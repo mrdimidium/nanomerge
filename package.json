@@ -7,9 +7,16 @@
   "license": "MIT",
   "repository": "nikolay-govorov/nanomerge",
   "devDependencies": {
-
+    "jest": "^21.2.1"
   },
   "scripts": {
-
+    "test": "jest --coverage"
+  },
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "statements": 100
+      }
+    }
   }
 }
