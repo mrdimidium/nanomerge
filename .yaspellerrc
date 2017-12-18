@@ -8,6 +8,8 @@
     "isomorphic",
     "JSDoc",
     "docdash",
-    "Versioning"
+    "Versioning",
+    "gzipped",
+    "js"
   ]
 }
