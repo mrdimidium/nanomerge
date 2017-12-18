@@ -1,9 +1,10 @@
 var merge = require('./merge')
+var utils = require('./utils')
 
 var LibError = require('./lib-error')
 
 function wrapper () {
-  var args = Array.from(arguments)
+  var args = utils.toArray(arguments)
 
   if (args.length === 0) {
     throw new LibError(

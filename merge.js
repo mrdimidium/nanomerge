@@ -1,6 +1,7 @@
 var nanoclone = require('nanoclone')
 
 var types = require('./types')
+var utils = require('./utils')
 var LibError = require('./lib-error')
 
 function merge (config) {
@@ -51,7 +52,7 @@ function merge (config) {
   }
 
   return function () {
-    var elements = Array.from(arguments)
+    var elements = utils.toArray(arguments)
 
     return elements.reduce(function (result, element) {
       return merger(result, element)
