@@ -18,6 +18,34 @@ it('Load custom config', function () {
   expect(merge({})({ a: 1 }, { b: 2 }, { c: 3 })).toEqual({ a: 1, b: 2, c: 3 })
 })
 
+it('Strategys field not object', function () {
+  var config = {
+    strategy: 'incorrect field'
+  }
+
+  expect(merge.bind(null, config)).toThrow(Error)
+})
+
+it('Strategy not found', function () {
+  var config = {
+    strategy: {
+      lol: 'concat'
+    }
+  }
+
+  expect(merge.bind(null, config)).toThrow(Error)
+})
+
+it('Merger not found', function () {
+  var config = {
+    strategy: {
+      array: 'concat-not-found'
+    }
+  }
+
+  expect(merge.bind(null, config)).toThrow(Error)
+})
+
 it('Merging 3 flat objects', function () {
   expect(merge({ a: 1 }, { b: 2 }, { c: 3 })).toEqual({ a: 1, b: 2, c: 3 })
 })
@@ -49,5 +77,51 @@ it('Merge nested objects and array', function () {
   expect(result).toEqual({
     g: null,
     key: { nested: '8', arr: [1, 2, 3, 4, 5] }
+  })
+})
+
+it('Normal work', function () {
+  var cases = [
+    // Select result type
+    { elements: [{}], result: {} },
+    { elements: [{}, {}], result: {} },
+    { elements: [{}, []], result: [] },
+    { elements: [[], {}], result: {} },
+    { elements: [[], null], result: null },
+    { elements: [{}, [], null, 0], result: 0 },
+    function () {
+      function fn () {}
+
+      return { elements: [{}, [], fn], result: fn }
+    },
+
+    // Nested
+    {
+      elements: [{ a: { b: [] }, c: [] }, { a: { b: {} } }],
+      result: { a: { b: {} }, c: [] }
+    },
+
+    // Change strategy
+    {
+      config: {
+        strategy: {
+          array: 'merge'
+        }
+      },
+
+      elements: [
+        { a: [{}, { a: 5 }] }, { a: [{}, { a: 6 }] }
+      ],
+
+      result: { a: [{}, { a: 6 }] }
+    }
+  ]
+
+  cases.forEach(function (c) {
+    try {
+      c = c()
+    } catch (err) {}
+
+    expect(merge(c.config).apply(null, c.elements)).toEqual(c.result)
   })
 })
