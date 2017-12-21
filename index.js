@@ -88,33 +88,6 @@ function merge (config) {
     strategy: config.strategy || {}
   }
 
-  if (!utils.is.object(config.strategy)) {
-    throw new Error(
-      'Configuration error. Strategy must be of type object'
-    )
-  }
-
-  // Validate config
-  Object.keys(config.strategy).forEach(function (strategyName) {
-    var type = types.find(function (t) {
-      return t.name === strategyName
-    })
-
-    if (type) {
-      var strategy = config.strategy[strategyName]
-
-      if (!type.merge[strategy]) {
-        throw new Error(
-          'Configuration error. Strategy ' + strategyName + ' not found'
-        )
-      }
-    } else {
-      throw new Error(
-        'Configuration error. Type ' + type + ' not found'
-      )
-    }
-  })
-
   function determineType (a, b) {
     for (var i = types.length - 1; i >= 0; --i) {
       var type = types[i]
@@ -156,13 +129,6 @@ function merge (config) {
 
 function wrapper () {
   var args = utils.toArray(arguments)
-
-  if (args.length === 0) {
-    throw new Error(
-      'The parameter list is empty! ' +
-      'The merge function should take config or a list of objects.'
-    )
-  }
 
   // custom config
   if (args.length === 1) {
