@@ -32,22 +32,21 @@ nanomerge({ a: 1, b: 2 }, { a: 2, c: 3 }, { b: 5, d: 7 }); // { a: 2, b: 5, c: 3
 
 #### Custom configuration
 
+If passed only one parameter, it is considered a configuration file. Will be created a customized instance.
+
 ```js
-var config = { clone: true };
+var merge = nanomerge({ /* options */ });
 
-var customInstance = nanomerge(config);
-
-customInstance({ a: 1 }, { b: 2 }) // { a: 1, b: 2 }
+merge({ a: 1 }, { b: 2 }) // { a: 1, b: 2 }
 ```
 
 ### Configuration
 
 ```js
 var config = {
-  /* Deep copying */
-  clone: true, // boolean
-
-  /* Strategy */
+  /**
+   * The strategy shows how we should handle a particular type
+   */
   strategy: {
     array: 'replace' // string: merge | replace | concat
   }
