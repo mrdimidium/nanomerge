@@ -1,5 +1,4 @@
 var types = require('../types')
-var LibError = require('../lib-error')
 
 function findType (name) {
   return types.find(function (el) { return el.name === name })
@@ -9,7 +8,7 @@ it('Primitive', function () {
   var type = findType('primitive')
 
   expect(type.merge.default(
-    function () { throw new LibError() }, [], [5, 2, 3]
+    function () { throw new Error() }, [], [5, 2, 3]
   )).toEqual([5, 2, 3])
 })
 

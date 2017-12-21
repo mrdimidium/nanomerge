@@ -1,13 +1,11 @@
 var merge = require('./merge')
 var utils = require('./utils')
 
-var LibError = require('./lib-error')
-
 function wrapper () {
   var args = utils.toArray(arguments)
 
   if (args.length === 0) {
-    throw new LibError(
+    throw new Error(
       'The parameter list is empty! ' +
       'The merge function should take config or a list of objects.'
     )

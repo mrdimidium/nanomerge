@@ -1,8 +1,7 @@
 var merge = require('../')
-var LibError = require('../lib-error')
 
 it('Parameter list is empty', function () {
-  expect(merge).toThrowError(LibError)
+  expect(merge).toThrow()
 })
 
 it('Clone elements', function () {

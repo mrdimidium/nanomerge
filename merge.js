@@ -2,7 +2,6 @@ var nanoclone = require('nanoclone')
 
 var types = require('./types')
 var utils = require('./utils')
-var LibError = require('./lib-error')
 
 function merge (config) {
   if (!config) {
@@ -20,12 +19,12 @@ function merge (config) {
         var strategy = config.strategy[strategyName]
 
         if (!type.merge[strategy]) {
-          throw new LibError(
+          throw new Error(
             'Configuration error. Strategy ' + strategyName + ' not found'
           )
         }
       } else {
-        throw new LibError(
+        throw new Error(
           'Configuration error. Type ' + type + ' not found'
         )
       }

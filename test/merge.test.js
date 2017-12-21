@@ -1,5 +1,4 @@
 var merge = require('../merge')
-var LibError = require('../lib-error')
 
 it('Config not found', function () {
   expect(typeof merge()).toBe('function')
@@ -26,7 +25,7 @@ it('Strategy not found', function () {
     }
   }
 
-  expect(merge.bind(null, config)).toThrow(LibError)
+  expect(merge.bind(null, config)).toThrow(Error)
 })
 
 it('Merger not found', function () {
@@ -36,7 +35,7 @@ it('Merger not found', function () {
     }
   }
 
-  expect(merge.bind(null, config)).toThrow(LibError)
+  expect(merge.bind(null, config)).toThrow(Error)
 })
 
 it('No strategy values', function () {
