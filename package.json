@@ -1,7 +1,7 @@
 {
   "name": "nanomerge",
-  "version": "0.1.0",
-  "description": "Tiny universal isomorphic library for deep merging objects",
+  "version": "0.1.1",
+  "description": "Tiny universal isomorphic library for intellectual deep merging objects",
   "keywords": [],
   "author": "Nikolay Govorov <nikolay_govorov@bk.ru>",
   "license": "MIT",
