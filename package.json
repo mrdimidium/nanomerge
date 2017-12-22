@@ -10,6 +10,9 @@
     "nanoclone": "^0.1.2"
   },
   "devDependencies": {
+    "benchmark": "^2.1.4",
+    "chalk": "^2.3.0",
+    "deepmerge": "^2.0.1",
     "docdash": "^0.4.0",
     "eslint": "^4.13.1",
     "eslint-config-logux": "^17.0.0",

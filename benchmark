@@ -1,0 +1,45 @@
+#!/usr/bin/env node
+
+/* eslint-disable node/no-unpublished-require */
+var chalk = require('chalk')
+var benchmark = require('benchmark')
+
+var deepmerge = require('deepmerge')
+
+var nanomerge = require('./')
+
+var suite = new benchmark.Suite()
+
+function formatNumber (number) {
+  return String(number).replace(/\d\d\d$/, ',$&')
+}
+
+function write (message) {
+  process.stdout.write(message + '\n')
+}
+
+suite
+  .add('nanomerge', function () {
+    nanomerge({ a: 5 }, { a: 6 })
+  })
+  .add('deepmerge', function () {
+    deepmerge({ a: 5 }, { a: 6 })
+  })
+  .add('Object.assign', function () {
+    Object.assign({ a: 5 }, { a: 6 })
+  })
+  .on('cycle', function (event) {
+    var name = event.target.name.padEnd('Object.assign'.length)
+    var hz = formatNumber(event.target.hz.toFixed(0)).padStart(7)
+
+    write(name + ' ' + chalk.bold(hz) + ' ops/sec')
+  })
+  .on('complete', function () {
+    // eslint-disable-next-line no-invalid-this
+    var name = this.filter('fastest').map('name')
+
+    write(
+      chalk.bold('\nFastest is ' + chalk.green(name) + '\n')
+    )
+  })
+  .run()
