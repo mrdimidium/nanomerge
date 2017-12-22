@@ -1,11 +1,6 @@
 var merge = require('../')
-var LibError = require('../lib-error')
 
-it('Parameter list is empty', function () {
-  expect(merge).toThrowError(LibError)
-})
-
-it('Clone elements', function () {
+it('Еlements must clone', function () {
   var a = { key: 2 }
   var b = { key: 3 }
 
@@ -19,36 +14,74 @@ it('Load custom config', function () {
   expect(merge({})({ a: 1 }, { b: 2 }, { c: 3 })).toEqual({ a: 1, b: 2, c: 3 })
 })
 
-it('Merging 3 flat objects', function () {
-  expect(merge({ a: 1 }, { b: 2 }, { c: 3 })).toEqual({ a: 1, b: 2, c: 3 })
-})
+it('Normal work', function () {
+  var cases = [
+    // Select result type
+    { elements: [{}], result: {} },
+    { elements: [{}, {}], result: {} },
+    { elements: [{}, []], result: [] },
+    { elements: [[], {}], result: {} },
+    { elements: [[], null], result: null },
+    { elements: [{}, [], null, 0], result: 0 },
+    function () {
+      function fn () {}
 
-it('Merge nested objects', function () {
-  var a = { key: { nested: '5' }, str: 'string' }
-  var b = { key: { nested: '8', g: 7 } }
+      return { elements: [{}, [], fn], result: fn }
+    },
 
-  expect(merge(a, b)).toEqual({ key: { nested: '8', g: 7 }, str: 'string' })
-})
+    // Nested
+    {
+      elements: [{ a: { b: [] }, c: [] }, { a: { b: {} } }],
+      result: { a: { b: {} }, c: [] }
+    },
 
-it('Merge array', function () {
-  var a = [1, 2, 3, 4]
-  var b = [5, 6, 7]
+    // Change strategy
+    {
+      config: {
+        strategy: {
+          array: 'merge'
+        }
+      },
 
-  expect(merge(a, b)).toEqual(b)
-})
+      elements: [
+        { a: [{}, { a: 5 }] }, { a: [{}, { a: 6 }] }
+      ],
 
-it('Merge nested objects and array', function () {
-  var a = { key: { nested: '5', arr: [1, 2, 3] }, g: null }
-  var b = { key: { nested: '8', arr: [4, 5] } }
+      result: { a: [{}, { a: 6 }] }
+    },
+    {
+      config: {
+        strategy: {
+          array: 'concat'
+        }
+      },
 
-  var result = merge({
-    strategy: {
-      array: 'concat'
+      elements: [
+        { a: [{}, { a: 5 }] }, { a: [{}, { a: 6 }] }
+      ],
+
+      result: { a: [{}, { a: 5 }, {}, { a: 6 }] }
+    },
+    {
+      config: {
+        strategy: {
+          array: 'replace'
+        }
+      },
+
+      elements: [
+        { a: [{}, { a: 5 }] }, { a: [{}, { a: 6 }] }
+      ],
+
+      result: { a: [{}, { a: 6 }] }
     }
-  })(a, b)
+  ]
 
-  expect(result).toEqual({
-    g: null,
-    key: { nested: '8', arr: [1, 2, 3, 4, 5] }
+  cases.forEach(function (c) {
+    try {
+      c = c()
+    } catch (err) {}
+
+    expect(merge(c.config).apply(null, c.elements)).toEqual(c.result)
   })
 })

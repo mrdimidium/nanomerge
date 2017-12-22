@@ -7,3 +7,9 @@ module.exports.toArray = function toArray (object) {
 
   return Array.from(object)
 }
+
+module.exports.is = {
+  object: function (el) {
+    return el !== null && (typeof el === 'object')
+  }
+}

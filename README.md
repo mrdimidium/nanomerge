@@ -4,9 +4,20 @@
 [![License](https://img.shields.io/npm/l/nanomerge.svg)](https://github.com/nikolay-govorov/nanomerge/blob/master/LICENSE)
 [![GitHub package version](https://img.shields.io/github/package-json/v/nikolay-govorov/nanomerge.svg)](https://github.com/nikolay-govorov/nanomerge)
 
-Tiny universal isomorphic library for deep merging objects
+Tiny universal isomorphic library for intellectual deep merging objects
 
-* **Small**. Only 179 bytes (minified and gzipped). Only 'nano' dependencies. It uses Size Limit to control size.
+```js
+var nanomerge = require('nanomerge');
+
+var merger = nanomerge({
+ strategy: { array: 'merge' }
+});
+
+//=> { a: [{ a: 1 }, { a: 3 }], b: 'It`s work!' }
+merger({ a: [{ a: 2 }, { a: 3 }] }, { a: [{ a: 1 }] }, { b: 'It`s work!' });
+```
+
+* **Small**. Only 800 bytes (minified and gzipped). Only 'nano' dependencies. It uses Size Limit to control size.
 
 * **Easy**. Everything is working. Just plug and play.
 
@@ -27,27 +38,26 @@ npm install --save nanomerge
 ```js
 var nanomerge = require('nanomerge');
 
-nanomerge({ a: 1, b: 2 }, { a: 2, c: 3 }, { b: 5, d: 7 }); // { a: 2, b: 5, c: 3, d: 7 }
+nanomerge({ a: 1, b: 2 }, { a: 2, c: 3 }, { b: 5, d: 7 }); //=> { a: 2, b: 5, c: 3, d: 7 }
 ```
 
 #### Custom configuration
 
+If passed only one parameter, it is considered a configuration file. Will be created a customized instance.
+
 ```js
-var config = { clone: true };
+var merge = nanomerge({ /* options */ });
 
-var customInstance = nanomerge(config);
-
-customInstance({ a: 1 }, { b: 2 }) // { a: 1, b: 2 }
+merge({ a: 1 }, { b: 2 }) //=> { a: 1, b: 2 }
 ```
 
 ### Configuration
 
 ```js
 var config = {
-  /* Deep copying */
-  clone: true, // boolean
-
-  /* Strategy */
+  /**
+   * The strategy shows how we should handle a particular type
+   */
   strategy: {
     array: 'replace' // string: merge | replace | concat
   }
