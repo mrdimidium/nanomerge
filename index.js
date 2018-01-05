@@ -1,15 +1,5 @@
 var nanoclone = require('nanoclone')
 
-function toArray (object) {
-  var result = []
-
-  for (var i = 0; i < object.length; ++i) {
-    result.push(object[i])
-  }
-
-  return result
-}
-
 var types = [
   {
     name: 'primitive',
@@ -127,7 +117,7 @@ function merge (config) {
   }
 
   return function () {
-    var elements = toArray(arguments)
+    var elements = Array.prototype.slice.call(arguments)
 
     return elements.reduceRight(function (result, element) {
       return merger(element, result)
@@ -136,7 +126,7 @@ function merge (config) {
 }
 
 function wrapper () {
-  var args = toArray(arguments)
+  var args = Array.prototype.slice.call(arguments)
 
   // custom config
   if (args.length === 1) {
