@@ -10,6 +10,7 @@
     "docdash",
     "Versioning",
     "gzipped",
-    "js"
+    "js",
+    "IE11"
   ]
 }

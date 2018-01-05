@@ -1,6 +1,9 @@
 # Change Log
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+# 0.1.2
+* Fixed IE11 and node@4
+
 ## 0.1.1
 * Support functions in objects
 * Removed validation of input parameters
