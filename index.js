@@ -1,6 +1,14 @@
 var nanoclone = require('nanoclone')
 
-var utils = require('./utils')
+function toArray (object) {
+  var result = []
+
+  for (var i = 0; i < object.length; ++i) {
+    result.push(object[i])
+  }
+
+  return result
+}
 
 var types = [
   {
@@ -25,7 +33,7 @@ var types = [
     name: 'object',
 
     is: function (el) {
-      return utils.is.object(el)
+      return el !== null && (typeof el === 'object')
     },
 
     default: 'deep',
@@ -119,7 +127,7 @@ function merge (config) {
   }
 
   return function () {
-    var elements = utils.toArray(arguments)
+    var elements = toArray(arguments)
 
     return elements.reduceRight(function (result, element) {
       return merger(element, result)
@@ -128,7 +136,7 @@ function merge (config) {
 }
 
 function wrapper () {
-  var args = utils.toArray(arguments)
+  var args = toArray(arguments)
 
   // custom config
   if (args.length === 1) {
