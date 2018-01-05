@@ -7,17 +7,17 @@
   "license": "MIT",
   "repository": "nikolay-govorov/nanomerge",
   "dependencies": {
-    "nanoclone": "^0.1.2"
+    "nanoclone": "^0.1.3"
   },
   "devDependencies": {
     "benchmark": "^2.1.4",
     "chalk": "^2.3.0",
     "deepmerge": "^2.0.1",
     "docdash": "^0.4.0",
-    "eslint": "^4.13.1",
+    "eslint": "^4.14.0",
     "eslint-config-logux": "^17.0.0",
     "eslint-config-standard": "^11.0.0-beta.0",
-    "eslint-plugin-es5": "^1.1.0",
+    "eslint-plugin-es5": "^1.2.0",
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jest": "^21.5.0",
     "eslint-plugin-node": "^5.2.1",
