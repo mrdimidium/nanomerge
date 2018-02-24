@@ -77,27 +77,27 @@ var types = [
   }
 ]
 
-function merge (config) {
+function determineType (a, b) {
+  for (var i = types.length - 1; i >= 0; --i) {
+    var type = types[i]
+
+    if (type.is(a) && type.is(b)) {
+      return type
+    } else if (type.is(a) || type.is(b)) {
+      break
+    }
+  }
+
+  return null
+}
+
+module.exports = function merge (elements, config) {
   if (!config) {
     config = {}
   }
 
   config = {
     strategy: config.strategy || {}
-  }
-
-  function determineType (a, b) {
-    for (var i = types.length - 1; i >= 0; --i) {
-      var type = types[i]
-
-      if (type.is(a) && type.is(b)) {
-        return type
-      } else if (type.is(a) || type.is(b)) {
-        break
-      }
-    }
-
-    return null
   }
 
   function merger (a, b) {
@@ -116,24 +116,11 @@ function merge (config) {
     return type.merge[strategy](merger, a, b)
   }
 
-  return function () {
-    var elements = Array.prototype.slice.call(arguments)
+  var result
 
-    return elements.reduceRight(function (result, element) {
-      return merger(element, result)
-    })
-  }
-}
-
-function wrapper () {
-  var args = Array.prototype.slice.call(arguments)
-
-  // custom config
-  if (args.length === 1) {
-    return merge(args[0])
+  for (var i = elements.length; i > 0; --i) {
+    result = merger(elements.pop(), result)
   }
 
-  return merge().apply(null, args)
+  return result
 }
-
-module.exports = wrapper

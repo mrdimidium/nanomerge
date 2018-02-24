@@ -4,14 +4,15 @@ it('Еlements must clone', function () {
   var a = { key: 2 }
   var b = { key: 3 }
 
-  merge(a, b)
+  merge([a, b])
 
   expect(a).toEqual({ key: 2 })
   expect(b).toEqual({ key: 3 })
 })
 
 it('Load custom config', function () {
-  expect(merge({})({ a: 1 }, { b: 2 }, { c: 3 })).toEqual({ a: 1, b: 2, c: 3 })
+  expect(merge([{ a: 1 }, { b: 2 }, { c: 3 }], {}))
+    .toEqual({ a: 1, b: 2, c: 3 })
 })
 
 it('Normal work', function () {
@@ -78,10 +79,10 @@ it('Normal work', function () {
   ]
 
   cases.forEach(function (c) {
-    try {
+    if (typeof c === 'function') {
       c = c()
-    } catch (err) {}
+    }
 
-    expect(merge(c.config).apply(null, c.elements)).toEqual(c.result)
+    expect(merge(c.elements, c.config)).toEqual(c.result)
   })
 })

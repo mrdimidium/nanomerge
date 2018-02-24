@@ -20,7 +20,7 @@ function write (message) {
 
 suite
   .add('nanomerge', function () {
-    nanomerge({ a: 5 }, { a: 6 })
+    nanomerge([{ a: 5 }, { a: 6 }])
   })
   .add('deepmerge', function () {
     deepmerge({ a: 5 }, { a: 6 })
