@@ -34,11 +34,11 @@
   },
   "scripts": {
     "lint-staged": "lint-staged",
-    "spellcheck": "yarn docs && yaspeller-ci *.md docs/*.html",
+    "spellcheck": "npm run docs && yaspeller-ci *.md docs/*.html",
     "clean": "rimraf docs/ coverage/",
     "docs": "jsdoc --configure .jsdocrc *.js",
     "lint": "eslint *.js test/*.js",
-    "test": "jest --coverage && yarn lint && size-limit && yarn spellcheck"
+    "test": "jest --coverage && npm run lint && size-limit && npm run spellcheck"
   },
   "jest": {
     "coverageThreshold": {
