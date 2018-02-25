@@ -18,15 +18,29 @@ function write (message) {
   process.stdout.write(message + '\n')
 }
 
+var tests = [
+  Array.from(new Array(100)).map(function () {
+    return [
+      { a: 5, b: { c: { d: {} } } }, { a: 5, b: { c: { d: { e: 5 } } } }
+    ]
+  })
+]
+
 suite
   .add('nanomerge', function () {
-    nanomerge([{ a: 5 }, { a: 6 }])
+    tests.forEach(function (test) {
+      nanomerge.apply(undefined, test)
+    })
   })
   .add('deepmerge', function () {
-    deepmerge({ a: 5 }, { a: 6 })
+    tests.forEach(function (test) {
+      deepmerge.all(test)
+    })
   })
   .add('Object.assign', function () {
-    Object.assign({ a: 5 }, { a: 6 })
+    tests.forEach(function (test) {
+      Object.assign.apply(undefined, test)
+    })
   })
   .on('cycle', function (event) {
     var name = event.target.name.padEnd('Object.assign'.length)

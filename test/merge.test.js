@@ -1,18 +1,15 @@
-var merge = require('../')
+var Merge = require('../merge')
 
 it('Еlements must clone', function () {
   var a = { key: 2 }
   var b = { key: 3 }
 
-  merge([a, b])
+  var merger = new Merge()
+
+  merger.merge([a, b])
 
   expect(a).toEqual({ key: 2 })
   expect(b).toEqual({ key: 3 })
-})
-
-it('Load custom config', function () {
-  expect(merge([{ a: 1 }, { b: 2 }, { c: 3 }], {}))
-    .toEqual({ a: 1, b: 2, c: 3 })
 })
 
 it('Normal work', function () {
@@ -83,6 +80,8 @@ it('Normal work', function () {
       c = c()
     }
 
-    expect(merge(c.elements, c.config)).toEqual(c.result)
+    var merger = new Merge(c.config)
+
+    expect(merger.merge.apply(merger, c.elements)).toEqual(c.result)
   })
 })
