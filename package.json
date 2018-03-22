@@ -16,11 +16,13 @@
     "docdash": "^0.4.0",
     "eslint": "^4.19.1",
     "eslint-config-logux": "^17.0.0",
+    "eslint-config-prettier": "^2.9.0",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-es5": "^1.2.0",
     "eslint-plugin-import": "^2.9.0",
     "eslint-plugin-jest": "^21.15.0",
     "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-standard": "^3.0.1",
@@ -28,6 +30,7 @@
     "jsdoc": "^3.5.5",
     "lint-staged": "^6.1.1",
     "pre-commit": "^1.2.2",
+    "prettier": "^1.11.1",
     "rimraf": "^2.6.2",
     "size-limit": "^0.13.2",
     "yaspeller-ci": "^1.0.0"
@@ -39,6 +42,7 @@
     "clean": "rimraf docs/ coverage/",
     "docs": "jsdoc --configure .jsdocrc *.js",
     "lint": "eslint *.js test/*.js",
+    "lint:fix": "npm run lint -- --fix",
     "test": "jest --coverage && npm run lint && size-limit && npm run spellcheck"
   },
   "jest": {
@@ -49,9 +53,15 @@
     }
   },
   "eslintConfig": {
-    "extends": "eslint-config-logux/browser",
+    "extends": [
+      "eslint-config-logux/browser",
+      "plugin:prettier/recommended"
+    ],
+    "plugins": [
+      "prettier"
+    ],
     "rules": {
-      "yoda": "off"
+      "prettier/prettier": "error"
     }
   },
   "size-limit": [

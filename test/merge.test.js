@@ -1,18 +1,18 @@
-var Merge = require('../merge')
+var Merge = require("../merge");
 
-it('Еlements must clone', function () {
-  var a = { key: 2 }
-  var b = { key: 3 }
+it("Еlements must clone", function() {
+  var a = { key: 2 };
+  var b = { key: 3 };
 
-  var merger = new Merge()
+  var merger = new Merge();
 
-  merger.merge([a, b])
+  merger.merge([a, b]);
 
-  expect(a).toEqual({ key: 2 })
-  expect(b).toEqual({ key: 3 })
-})
+  expect(a).toEqual({ key: 2 });
+  expect(b).toEqual({ key: 3 });
+});
 
-it('Normal work', function () {
+it("Normal work", function() {
   var cases = [
     // Select result type
     { elements: [{}], result: {} },
@@ -21,10 +21,10 @@ it('Normal work', function () {
     { elements: [[], {}], result: {} },
     { elements: [[], null], result: null },
     { elements: [{}, [], null, 0], result: 0 },
-    function () {
-      function fn () {}
+    function() {
+      function fn() {}
 
-      return { elements: [{}, [], fn], result: fn }
+      return { elements: [{}, [], fn], result: fn };
     },
 
     // Nested
@@ -37,51 +37,45 @@ it('Normal work', function () {
     {
       config: {
         strategy: {
-          array: 'merge'
+          array: "merge"
         }
       },
 
-      elements: [
-        { a: [{}, { a: 5 }] }, { a: [{}, { a: 6 }] }
-      ],
+      elements: [{ a: [{}, { a: 5 }] }, { a: [{}, { a: 6 }] }],
 
       result: { a: [{}, { a: 6 }] }
     },
     {
       config: {
         strategy: {
-          array: 'concat'
+          array: "concat"
         }
       },
 
-      elements: [
-        { a: [{}, { a: 5 }] }, { a: [{}, { a: 6 }] }
-      ],
+      elements: [{ a: [{}, { a: 5 }] }, { a: [{}, { a: 6 }] }],
 
       result: { a: [{}, { a: 5 }, {}, { a: 6 }] }
     },
     {
       config: {
         strategy: {
-          array: 'replace'
+          array: "replace"
         }
       },
 
-      elements: [
-        { a: [{}, { a: 5 }] }, { a: [{}, { a: 6 }] }
-      ],
+      elements: [{ a: [{}, { a: 5 }] }, { a: [{}, { a: 6 }] }],
 
       result: { a: [{}, { a: 6 }] }
     }
-  ]
+  ];
 
-  cases.forEach(function (c) {
-    if (typeof c === 'function') {
-      c = c()
+  cases.forEach(function(c) {
+    if (typeof c === "function") {
+      c = c();
     }
 
-    var merger = new Merge(c.config)
+    var merger = new Merge(c.config);
 
-    expect(merger.merge.apply(merger, c.elements)).toEqual(c.result)
-  })
-})
+    expect(merger.merge.apply(merger, c.elements)).toEqual(c.result);
+  });
+});

@@ -1,5 +1,5 @@
-var Merge = require('./merge')
+var Merge = require("./merge");
 
-var merger = new Merge()
+var merger = new Merge();
 
-module.exports = merger.merge.bind(merger)
+module.exports = merger.merge.bind(merger);
