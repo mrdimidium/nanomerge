@@ -2,16 +2,25 @@ var nanoclone = require("nanoclone/index");
 
 var types = require("./types");
 
-function Merge(config) {
-  if (!config) {
-    config = {};
-  }
+function normalizeConfig(config) {
+  return {
+    strategy: config.strategy || {},
 
-  this.types = types.concat(config.types || []);
-
-  this.config = {
-    strategy: config.strategy || {}
+    types: {
+      mode: (config.types || {}).mode || "add",
+      list: (config.types || {}).list || []
+    }
   };
+}
+
+function Merge(config) {
+  config = normalizeConfig(config || {});
+
+  this.types = (config.types.mode === "add" ? types : []).concat(
+    config.types.list
+  );
+
+  this.config = config;
 }
 
 Merge.prototype.determineType = function(a, b) {

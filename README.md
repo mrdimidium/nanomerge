@@ -35,7 +35,7 @@ npm install --save nanomerge
 
 ### Usage
 
-#### Normal
+#### Default settings
 
 ```js
 var nanomerge = require('nanomerge');
@@ -43,14 +43,16 @@ var nanomerge = require('nanomerge');
 nanomerge({ a: 1, b: 2 }, { a: 2, c: 3 }, { b: 5, d: 7 }); //=> { a: 2, b: 5, c: 3, d: 7 }
 ```
 
-#### Custom configuration
+#### Custom merge mechanism
 
 If passed only one parameter, it is interpreted as configuration data, and a customized merge function is returned.
 
 ```js
-var merge = nanomerge({ /* options */ });
+var Merge = require('nanomerge/merge');
 
-merge({ a: 1 }, { b: 2 }) //=> { a: 1, b: 2 }
+var myCustomMerger = new Merge({ /* options */ });
+
+myCustomMerger.merge({ a: 1 }, { b: 2 }) //=> { a: 1, b: 2 }
 ```
 
 ### Configuration
@@ -64,6 +66,28 @@ var config = {
     array:     'replace', // string: merge | replace | concat
     object:    'deep',    // string: deep
     primitive: 'default', // string: default
-  }
+  },
+
+   /**
+    * Custom types allow you to create intelligent mechanisms for enterprises
+    */
+   types: {
+     mode: 'add', // string: add | replace
+
+     list: [
+       {
+         name: "array", // Type name. The name must be unique.
+
+         is: function(el) {  }, // Function checking whether an element is an object of type
+
+         default: "simple", // The name of the mechanism of merging the default
+
+         merge: { // The object contains all the mechanisms for draining this type
+           simple: function(merger, a, b) {},
+         }
+       },
+       /* You custom types */
+     ],
+   },
 };
 ```

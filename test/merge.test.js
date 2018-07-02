@@ -1,5 +1,75 @@
 var Merge = require("../merge");
 
+it("Must validate configuration", function() {
+  var cases = {
+    normal: [
+      {
+        config: {
+          types: {
+            mode: "replace",
+            list: [{}, {}]
+          }
+        },
+
+        result: {
+          strategy: {},
+
+          types: {
+            mode: "replace",
+            list: [{}, {}]
+          }
+        }
+      },
+      {
+        config: {},
+
+        result: {
+          strategy: {},
+
+          types: {
+            mode: "add",
+            list: []
+          }
+        }
+      },
+      {
+        config: {
+          strategy: {
+            array: "replace"
+          }
+        },
+
+        result: {
+          strategy: {
+            array: "replace"
+          },
+
+          types: {
+            mode: "add",
+            list: []
+          }
+        }
+      }
+    ],
+
+    incorrect: []
+  };
+
+  cases.normal.forEach(function(testCase) {
+    var instance = new Merge(testCase.config);
+
+    expect(instance.config).toEqual(testCase.result);
+  });
+
+  cases.incorrect.forEach(function(testCase) {
+    function callback() {
+      new Merge(testCase.config);
+    }
+
+    expect(callback).toThrowError(testCase.error);
+  });
+});
+
 it("Еlements must clone", function() {
   var a = { key: 2 };
   var b = { key: 3 };
@@ -12,7 +82,7 @@ it("Еlements must clone", function() {
   expect(b).toEqual({ key: 3 });
 });
 
-it("Normal work", function() {
+describe("Normal work", function() {
   var cases = [
     // Select result type
     { elements: [{}], result: {} },
