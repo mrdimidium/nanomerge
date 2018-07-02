@@ -1,4 +1,4 @@
-var nanoclone = require("nanoclone");
+var nanoclone = require("nanoclone/index");
 
 var types = [
   {
