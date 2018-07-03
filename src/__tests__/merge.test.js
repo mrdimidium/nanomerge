@@ -4,7 +4,7 @@ it("Еlements must clone", function() {
   var a = { key: 2 };
   var b = { key: 3 };
 
-  var merger = new Merge();
+  var merger = new Merge({});
 
   merger.merge([a, b]);
 
@@ -74,7 +74,7 @@ describe("Normal work", function() {
       c = c();
     }
 
-    var merger = new Merge(c.config);
+    var merger = new Merge(c.config || {});
 
     expect(merger.merge.apply(merger, c.elements)).toEqual(c.result);
   });

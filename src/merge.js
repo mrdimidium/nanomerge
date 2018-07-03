@@ -4,7 +4,7 @@ var types = require("./types");
 var normalizeConfig = require("./lib/normalize_config");
 
 function Merge(config) {
-  config = normalizeConfig(config || {});
+  config = normalizeConfig(config);
 
   this.types = (config.types.mode === "add" ? types : []).concat(
     config.types.list
