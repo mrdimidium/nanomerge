@@ -4,12 +4,6 @@ it("Must be function", function() {
   expect(typeof normalizeConfig).toBe("function");
 });
 
-it("Must be throw error if config not equal object", function() {
-  expect(normalizeConfig).toThrow();
-  expect(normalizeConfig.bind(null, 4)).toThrow();
-  expect(normalizeConfig.bind(null, null)).toThrow();
-});
-
 it("Must return default config", function() {
   expect(normalizeConfig({})).toMatchSnapshot();
 });
