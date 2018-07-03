@@ -19,7 +19,7 @@ var merger = nanomerge({
 merger({ a: [{ a: 2 }, { a: 3 }] }, { a: [{ a: 1 }] }, { b: 'It works!' });
 ```
 
-* **Small**. Only 800 bytes (minified and gzipped). Only "nano" dependencies. It uses [Size Limit](https://www.npmjs.com/package/size-limit) to keep the size under control.
+* **Small**. Only 1 kilobyte (minified and gzipped). Only "nano" dependencies. It uses [Size Limit](https://www.npmjs.com/package/size-limit) to keep the size under control.
 
 * **Easy**. Everything works out of the box. Just plug and play.
 
