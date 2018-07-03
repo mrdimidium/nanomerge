@@ -36,7 +36,7 @@
     "yaspeller-ci": "^1.0.0"
   },
   "scripts": {
-    "benchmark": "node ./benchmark",
+    "benchmark": "node ./benchmark.js",
     "lint-staged": "lint-staged",
     "spellcheck": "npm run docs && yaspeller-ci *.md docs/*.html",
     "clean": "rimraf docs/ coverage/",
