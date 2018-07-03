@@ -1,4 +1,4 @@
-const Merge = require("../merge");
+import Merge from "../merge";
 
 it("Еlements must clone", () => {
   const a = { key: 2 };

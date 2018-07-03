@@ -1,4 +1,4 @@
-var normalizeConfig = require("../normalize_config");
+import normalizeConfig from "../normalize_config";
 
 it("Must be function", function() {
   expect(typeof normalizeConfig).toBe("function");

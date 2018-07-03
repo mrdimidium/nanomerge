@@ -1,9 +1,9 @@
 /* eslint-disable global-require, import/no-dynamic-require */
 
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
 
-const nanomerge = require("../");
+import nanomerge from "../src/index";
 
 const files = fs.readdirSync(path.join(__dirname, "./fixtures"));
 const cases = files.map(file => {

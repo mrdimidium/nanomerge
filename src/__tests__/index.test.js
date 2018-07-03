@@ -1,4 +1,6 @@
-const Merge = require("../merge");
+import Merge from "../merge";
+
+import nanomerge from "..";
 
 jest.mock("../merge", () => {
   const FakeMerge = jest.fn();
@@ -7,8 +9,6 @@ jest.mock("../merge", () => {
 
   return FakeMerge;
 });
-
-const nanomerge = require("../.");
 
 afterEach(() => {
   Merge.mockClear();
