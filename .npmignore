@@ -1,4 +1,5 @@
 .gitignore
+.gitattributes
 .npmignore
 .editorconfig
 
@@ -7,6 +8,12 @@ npm-debug.log
 yarn-error.log
 package-lock.json
 yarn.lock
+
+src/
+
+rollup.config.js
+benchmark.js
+.babelrc
 
 test/
 coverage/
