@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Must run Merge.merge 1`] = `
+exports[`#() Must run Merge.merge 1`] = `
 Array [
   Array [
     Object {},
@@ -19,8 +19,39 @@ Array [
 ]
 `;
 
-exports[`Must to create Merge 1`] = `
+exports[`#() Must to create Merge 1`] = `
 Array [
-  Array [],
+  Array [
+    Object {},
+  ],
+]
+`;
+
+exports[`#create() Must create new Merge by a call 1`] = `
+Array [
+  Array [
+    Object {},
+  ],
+]
+`;
+
+exports[`#create() Must not create new Merge immediately 1`] = `Array []`;
+
+exports[`#create() Must run Merge.merge 1`] = `
+Array [
+  Array [
+    Object {},
+    Object {},
+    Object {},
+  ],
+  Array [
+    Array [],
+    Array [],
+  ],
+  Array [
+    Array [],
+    Array [],
+    Object {},
+  ],
 ]
 `;
