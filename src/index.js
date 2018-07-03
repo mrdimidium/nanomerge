@@ -28,7 +28,7 @@ nanomerge.create = function create(config) {
   const merger = new Merge(config);
 
   return function merge(...args) {
-    return merger.merge(defaultMerger, args);
+    return merger.merge(...args);
   };
 };
 
