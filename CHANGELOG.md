@@ -1,6 +1,10 @@
 # Change Log
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+# 0.3.0-0
+* Added build system
+* Upgrade API from to create custom merger
+
 # 0.2.0
 * Added tests from entry point
 * Added end-to-end tests
