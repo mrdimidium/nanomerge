@@ -1,17 +1,7 @@
 var nanoclone = require("nanoclone/index");
 
 var types = require("./types");
-
-function normalizeConfig(config) {
-  return {
-    strategy: config.strategy || {},
-
-    types: {
-      mode: (config.types || {}).mode || "add",
-      list: (config.types || {}).list || []
-    }
-  };
-}
+var normalizeConfig = require("./lib/normalize_config");
 
 function Merge(config) {
   config = normalizeConfig(config || {});

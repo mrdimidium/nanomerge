@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Must return default config 1`] = `
+Object {
+  "strategy": Object {},
+  "types": Object {
+    "list": Array [],
+    "mode": "add",
+  },
+}
+`;
+
+exports[`Must set user config 1`] = `
+Object {
+  "strategy": Object {
+    "array": "replace",
+  },
+  "types": Object {
+    "list": Array [
+      Object {},
+    ],
+    "mode": "replace",
+  },
+}
+`;
