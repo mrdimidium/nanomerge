@@ -1,3 +1,5 @@
+import { minify } from "uglify-es";
+import { uglify } from "rollup-plugin-uglify";
 import resolve from "rollup-plugin-node-resolve";
 
 import pkg from "./package.json";
@@ -18,5 +20,5 @@ export default {
     }
   ],
 
-  plugins: [resolve()]
+  plugins: [resolve(), uglify({}, minify)]
 };
