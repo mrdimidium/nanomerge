@@ -33,18 +33,20 @@
     "pre-commit": "^1.2.2",
     "prettier": "^1.11.1",
     "rimraf": "^2.6.2",
+    "rollup": "^0.62.0",
     "size-limit": "^0.13.2",
     "yaspeller-ci": "^1.0.0"
   },
   "scripts": {
+    "build": "rollup -c",
     "benchmark": "node ./benchmark.js",
     "lint-staged": "lint-staged",
     "spellcheck": "npm run docs && yaspeller-ci *.md docs/*.html",
-    "clean": "rimraf docs/ coverage/",
-    "docs": "jsdoc --configure .jsdocrc src/*.js",
+    "clean": "rimraf docs/ coverage/ dist/",
+    "docs": "jsdoc --configure .jsdocrc src/**/*.js",
     "lint": "eslint {.,{src,test}{,/**}}/*.js",
     "lint:fix": "npm run lint -- --fix",
-    "test": "jest --coverage && npm run lint && size-limit && npm run spellcheck"
+    "test": "npm run build && jest --coverage && npm run lint && size-limit && npm run spellcheck"
   },
   "jest": {
     "coverageThreshold": {

@@ -1,4 +1,4 @@
-var nanoclone = require("nanoclone/index");
+import nanoclone from "nanoclone";
 
 var types = [
   {
@@ -77,4 +77,4 @@ var types = [
   }
 ];
 
-module.exports = types;
+export default types;

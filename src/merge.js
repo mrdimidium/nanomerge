@@ -1,7 +1,7 @@
-var nanoclone = require("nanoclone/index");
+import nanoclone from "nanoclone";
 
-var types = require("./types");
-var normalizeConfig = require("./lib/normalize_config");
+import types from "./types";
+import normalizeConfig from "./lib/normalize_config";
 
 function Merge(config) {
   config = normalizeConfig(config);
@@ -55,4 +55,4 @@ Merge.prototype.merge = function() {
   return result;
 };
 
-module.exports = Merge;
+export default Merge;

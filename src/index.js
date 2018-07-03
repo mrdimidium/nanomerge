@@ -1,4 +1,4 @@
-var Merge = require("./merge");
+import Merge from "./merge";
 
 var defaultMerger = new Merge({});
 
@@ -32,4 +32,4 @@ nanomerge.create = function create(config) {
   };
 };
 
-module.exports = nanomerge;
+export default nanomerge;
