@@ -1,54 +1,54 @@
-/* eslint-disable node/no-unpublished-require, es5/no-es6-static-methods */
+/* eslint-disable import/no-extraneous-dependencies */
 
-var chalk = require("chalk");
-var benchmark = require("benchmark");
+const chalk = require("chalk");
+const benchmark = require("benchmark");
 
-var deepmerge = require("deepmerge");
+const deepmerge = require("deepmerge");
 
-var nanomerge = require("./");
+const nanomerge = require("./");
 
-var suite = new benchmark.Suite();
+const suite = new benchmark.Suite();
 
 function formatNumber(number) {
   return String(number).replace(/\d\d\d$/, ",$&");
 }
 
 function write(message) {
-  process.stdout.write(message + "\n");
+  process.stdout.write(`${message}\n`);
 }
 
-var tests = [
-  Array.from(new Array(1000)).map(function() {
-    return [{ a: 5, b: { c: { d: {} } } }, { a: 5, b: { c: { d: { e: 5 } } } }];
-  })
+const tests = [
+  Array.from(new Array(1000)).map(() => [
+    { a: 5, b: { c: { d: {} } } },
+    { a: 5, b: { c: { d: { e: 5 } } } }
+  ])
 ];
 
 suite
-  .add("nanomerge", function() {
-    tests.forEach(function(test) {
-      nanomerge.apply(undefined, test);
+  .add("nanomerge", () => {
+    tests.forEach(test => {
+      nanomerge(...test);
     });
   })
-  .add("deepmerge", function() {
-    tests.forEach(function(test) {
+  .add("deepmerge", () => {
+    tests.forEach(test => {
       deepmerge.all.call(undefined, test);
     });
   })
-  .add("Object.assign", function() {
-    tests.forEach(function(test) {
+  .add("Object.assign", () => {
+    tests.forEach(test => {
       Object.assign.apply(undefined, test);
     });
   })
-  .on("cycle", function(event) {
-    var name = event.target.name.padEnd("Object.assign".length);
-    var hz = formatNumber(event.target.hz.toFixed(0)).padStart(7);
+  .on("cycle", event => {
+    const name = event.target.name.padEnd("Object.assign".length);
+    const hz = formatNumber(event.target.hz.toFixed(0)).padStart(7);
 
-    write(name + " " + chalk.bold(hz) + " ops/sec");
+    write(`${name} ${chalk.bold(hz)} ops/sec`);
   })
-  .on("complete", function() {
-    // eslint-disable-next-line no-invalid-this
-    var name = this.filter("fastest").map("name");
+  .on("complete", function complete() {
+    const name = this.filter("fastest").map("name");
 
-    write(chalk.bold("\nFastest is " + chalk.green(name) + "\n"));
+    write(chalk.bold(`\nFastest is ${chalk.green(name)}\n`));
   })
   .run();

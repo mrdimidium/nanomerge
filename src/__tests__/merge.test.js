@@ -1,10 +1,10 @@
-var Merge = require("../merge");
+const Merge = require("../merge");
 
-it("Еlements must clone", function() {
-  var a = { key: 2 };
-  var b = { key: 3 };
+it("Еlements must clone", () => {
+  const a = { key: 2 };
+  const b = { key: 3 };
 
-  var merger = new Merge({});
+  const merger = new Merge({});
 
   merger.merge([a, b]);
 
@@ -12,8 +12,8 @@ it("Еlements must clone", function() {
   expect(b).toEqual({ key: 3 });
 });
 
-describe("Normal work", function() {
-  var cases = [
+describe("Normal work", () => {
+  const cases = [
     // Select result type
     { elements: [{}], result: {} },
     { elements: [{}, {}], result: {} },
@@ -21,7 +21,7 @@ describe("Normal work", function() {
     { elements: [[], {}], result: {} },
     { elements: [[], null], result: null },
     { elements: [{}, [], null, 0], result: 0 },
-    function() {
+    () => {
       function fn() {}
 
       return { elements: [{}, [], fn], result: fn };
@@ -69,13 +69,11 @@ describe("Normal work", function() {
     }
   ];
 
-  cases.forEach(function(c) {
-    if (typeof c === "function") {
-      c = c();
-    }
+  cases.forEach(c => {
+    const { config, elements, result } = typeof c === "function" ? c() : c;
 
-    var merger = new Merge(c.config || {});
+    const merger = new Merge(config || {});
 
-    expect(merger.merge.apply(merger, c.elements)).toEqual(c.result);
+    expect(merger.merge(...elements)).toEqual(result);
   });
 });

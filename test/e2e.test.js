@@ -1,19 +1,19 @@
-/* eslint-disable es5/no-for-of, es5/no-es6-static-methods, global-require, security/detect-non-literal-require */
+/* eslint-disable global-require, import/no-dynamic-require */
 
-var fs = require("fs");
-var path = require("path");
+const fs = require("fs");
+const path = require("path");
 
-var nanomerge = require("../");
+const nanomerge = require("../");
 
-var files = fs.readdirSync(path.join(__dirname, "./fixtures"));
-var cases = files.map(function(file) {
-  var item = require(path.join(__dirname, "./fixtures", file));
+const files = fs.readdirSync(path.join(__dirname, "./fixtures"));
+const cases = files.map(file => {
+  const item = require(path.join(__dirname, "./fixtures", file));
 
   return Object.assign({ name: file.match(/(.*)\.js$/)[1] }, item);
 });
 
-for (var test of cases) {
-  it(test.name, function() {
-    expect(nanomerge.apply(null, test.source)).toEqual(test.result);
+cases.forEach(test => {
+  it(test.name, () => {
+    expect(nanomerge(...test.source)).toEqual(test.result);
   });
-}
+});

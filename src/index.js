@@ -1,6 +1,6 @@
 import Merge from "./merge";
 
-var defaultMerger = new Merge({});
+const defaultMerger = new Merge({});
 
 /**
  * Nanomerge wrapper
@@ -9,8 +9,8 @@ var defaultMerger = new Merge({});
  * @params {[*]} - Items to merge
  * @return {*} - merged item
  */
-function nanomerge() {
-  return defaultMerger.merge.apply(defaultMerger, arguments);
+function nanomerge(...args) {
+  return defaultMerger.merge(...args);
 }
 
 /**
@@ -25,10 +25,10 @@ nanomerge.create = function create(config) {
     throw new Error("Config must be a object");
   }
 
-  var merger = new Merge(config);
+  const merger = new Merge(config);
 
-  return function merge() {
-    return merger.merge.apply(defaultMerger, arguments);
+  return function merge(...args) {
+    return merger.merge(defaultMerger, args);
   };
 };
 

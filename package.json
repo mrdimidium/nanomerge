@@ -16,17 +16,10 @@
     "deepmerge": "^2.1.0",
     "docdash": "^0.4.0",
     "eslint": "^4.19.1",
-    "eslint-config-logux": "^17.0.0",
+    "eslint-config-airbnb-base": "^13.0.0",
     "eslint-config-prettier": "^2.9.0",
-    "eslint-config-standard": "^11.0.0",
-    "eslint-plugin-es5": "^1.2.0",
-    "eslint-plugin-import": "^2.9.0",
-    "eslint-plugin-jest": "^21.15.0",
-    "eslint-plugin-node": "^5.2.1",
-    "eslint-plugin-prettier": "^2.6.0",
-    "eslint-plugin-promise": "^3.7.0",
-    "eslint-plugin-security": "^1.4.0",
-    "eslint-plugin-standard": "^3.0.1",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-prettier": "^2.6.1",
     "jest": "^21.2.1",
     "jsdoc": "^3.5.5",
     "lint-staged": "^6.1.1",
@@ -57,12 +50,16 @@
   },
   "eslintConfig": {
     "extends": [
-      "eslint-config-logux/browser",
+      "airbnb-base",
       "plugin:prettier/recommended"
     ],
     "plugins": [
       "prettier"
     ],
+    "env": {
+      "node": true,
+      "jest": true
+    },
     "rules": {
       "prettier/prettier": "error"
     }

@@ -1,11 +1,11 @@
 import nanoclone from "nanoclone";
 
-var types = [
+const types = [
   {
     name: "primitive",
 
-    is: function(el) {
-      var type = typeof el;
+    is(el) {
+      const type = typeof el;
 
       return type === "number" || type === "string" || type === "boolean";
     },
@@ -13,7 +13,7 @@ var types = [
     default: "default",
 
     merge: {
-      default: function(merger, a, b) {
+      default(merger, a, b) {
         return b;
       }
     }
@@ -22,22 +22,22 @@ var types = [
   {
     name: "object",
 
-    is: function(el) {
+    is(el) {
       return el !== null && typeof el === "object";
     },
 
     default: "deep",
 
     merge: {
-      deep: function(merger, a, b) {
-        var result = {};
+      deep(merger, a, b) {
+        const result = {};
 
-        var keys = {
+        const keys = {
           a: Object.keys(a),
           b: Object.keys(b)
         };
 
-        keys.a.concat(keys.b).forEach(function(key) {
+        keys.a.concat(keys.b).forEach(key => {
           result[key] = merger(a[key], b[key]);
         });
 
@@ -49,28 +49,28 @@ var types = [
   {
     name: "array",
 
-    is: function(el) {
+    is(el) {
       return Array.isArray(el);
     },
 
     default: "replace",
 
     merge: {
-      merge: function(merger, a, b) {
-        var result = [];
+      merge(merger, a, b) {
+        const result = [];
 
-        for (var i = 0; i < Math.max(a.length, b.length); ++i) {
+        for (let i = 0; i < Math.max(a.length, b.length); i += 1) {
           result.push(merger(a[i], b[i]));
         }
 
         return result;
       },
 
-      replace: function(merger, a, b) {
+      replace(merger, a, b) {
         return nanoclone(b);
       },
 
-      concat: function(merger, a, b) {
+      concat(merger, a, b) {
         return [].concat(a).concat(b);
       }
     }

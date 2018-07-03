@@ -1,26 +1,26 @@
-var Merge = require("../merge");
+const Merge = require("../merge");
 
-jest.mock("../merge", function() {
-  var FakeMerge = jest.fn();
+jest.mock("../merge", () => {
+  const FakeMerge = jest.fn();
 
   FakeMerge.prototype.merge = jest.fn();
 
   return FakeMerge;
 });
 
-var nanomerge = require("../.");
+const nanomerge = require("../.");
 
-afterEach(function() {
+afterEach(() => {
   Merge.mockClear();
   Merge.prototype.merge.mockClear();
 });
 
-describe("#()", function() {
-  it("Must to create Merge", function() {
+describe("#()", () => {
+  it("Must to create Merge", () => {
     expect(Merge.mock.calls).toMatchSnapshot();
   });
 
-  it("Must run Merge.merge", function() {
+  it("Must run Merge.merge", () => {
     nanomerge({}, {}, {});
     nanomerge([], []);
     nanomerge([], [], {});
@@ -29,29 +29,29 @@ describe("#()", function() {
   });
 });
 
-describe("#create()", function() {
-  it("Must be function", function() {
+describe("#create()", () => {
+  it("Must be function", () => {
     expect(typeof nanomerge.create).toBe("function");
   });
 
-  it("Must be throw error if config not equal object", function() {
+  it("Must be throw error if config not equal object", () => {
     expect(nanomerge.create).toThrow();
     expect(nanomerge.create.bind(null, 4)).toThrow();
     expect(nanomerge.create.bind(null, null)).toThrow();
   });
 
-  it("Must not create new Merge immediately", function() {
+  it("Must not create new Merge immediately", () => {
     expect(Merge.mock.calls).toMatchSnapshot();
   });
 
-  it("Must create new Merge by a call", function() {
+  it("Must create new Merge by a call", () => {
     nanomerge.create({});
 
     expect(Merge.mock.calls).toMatchSnapshot();
   });
 
-  it("Must run Merge.merge", function() {
-    var merger = nanomerge.create({});
+  it("Must run Merge.merge", () => {
+    const merger = nanomerge.create({});
 
     merger({}, {}, {});
     merger([], []);
