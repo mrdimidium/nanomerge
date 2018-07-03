@@ -8,7 +8,7 @@ jest.mock("../merge", function() {
   return FakeMerge;
 });
 
-var nanomerge = require("../");
+var nanomerge = require("../.");
 
 it("Must to create Merge", function() {
   expect(Merge.mock.calls).toMatchSnapshot();
