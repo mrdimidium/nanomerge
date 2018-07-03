@@ -1,15 +1,15 @@
 import normalizeConfig from "../normalize_config";
 
-it("Must be function", function() {
+it("Must be function", () => {
   expect(typeof normalizeConfig).toBe("function");
 });
 
-it("Must return default config", function() {
+it("Must return default config", () => {
   expect(normalizeConfig({})).toMatchSnapshot();
 });
 
-it("Must set user config", function() {
-  var config = {
+it("Must set user config", () => {
+  const config = {
     strategy: {
       array: "replace"
     },
@@ -23,70 +23,28 @@ it("Must set user config", function() {
   expect(normalizeConfig(config)).toMatchSnapshot();
 });
 
-it("Must validate configuration", function() {
-  var cases = {
-    normal: [
-      {
-        config: {
-          types: {
-            mode: "replace",
-            list: [{}, {}]
-          }
-        },
-
-        result: {
-          strategy: {},
-
-          types: {
-            mode: "replace",
-            list: [{}, {}]
-          }
-        }
-      },
-      {
-        config: {},
-
-        result: {
-          strategy: {},
-
-          types: {
-            mode: "add",
-            list: []
-          }
-        }
-      },
-      {
-        config: {
-          strategy: {
-            array: "replace"
-          }
-        },
-
-        result: {
-          strategy: {
-            array: "replace"
-          },
-
-          types: {
-            mode: "add",
-            list: []
-          }
-        }
+describe("Must validate configuration", () => {
+  const cases = {
+    empty: {},
+    types: {
+      types: {
+        mode: "replace",
+        list: [{}, {}]
       }
-    ],
-
-    incorrect: []
+    },
+    strategy: {
+      strategy: {
+        array: "replace"
+      }
+    },
+    force: {
+      force: true
+    }
   };
 
-  cases.normal.forEach(function(testCase) {
-    expect(normalizeConfig(testCase.config)).toEqual(testCase.result);
-  });
-
-  cases.incorrect.forEach(function(testCase) {
-    function callback() {
-      normalizeConfig(testCase.config);
-    }
-
-    expect(callback).toThrowError(testCase.error);
+  Object.keys(cases).forEach(testCaseName => {
+    it(`Must set ${testCaseName}`, () => {
+      expect(normalizeConfig(cases[testCaseName])).toMatchSnapshot();
+    });
   });
 });

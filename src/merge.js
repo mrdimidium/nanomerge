@@ -29,18 +29,20 @@ class Merge {
 
   step(a, b) {
     if (b === undefined) {
-      return nanoclone(a);
+      return this.config.force ? nanoclone(a) : a;
     }
 
     const type = this.determineType(a, b);
 
     if (!type) {
-      return nanoclone(b);
+      return this.config.force ? nanoclone(b) : b;
     }
 
     const strategy = this.config.strategy[type.name] || type.default;
+    const merge = this.step.bind(this);
+    const config = { force: this.config.force };
 
-    return type.merge[strategy](this.step.bind(this), a, b);
+    return type.merge[strategy](merge, config, a, b);
   }
 
   merge(...elements) {

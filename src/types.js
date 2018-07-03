@@ -1,5 +1,9 @@
 import nanoclone from "nanoclone";
 
+function set(force, elements) {
+  return force ? nanoclone(elements) : elements;
+}
+
 const types = [
   {
     name: "primitive",
@@ -13,8 +17,8 @@ const types = [
     default: "default",
 
     merge: {
-      default(merger, a, b) {
-        return b;
+      default(merger, config, a, b) {
+        return set(config.force, b);
       }
     }
   },
@@ -29,19 +33,20 @@ const types = [
     default: "deep",
 
     merge: {
-      deep(merger, a, b) {
-        const result = {};
-
+      deep(merger, config, a, b) {
         const keys = {
           a: Object.keys(a),
           b: Object.keys(b)
         };
 
-        keys.a.concat(keys.b).forEach(key => {
-          result[key] = merger(a[key], b[key]);
-        });
-
-        return result;
+        return set(
+          config.set,
+          [...keys.a, ...keys.b].reduce(
+            (result, key) =>
+              Object.assign(result, { [key]: merger(a[key], b[key]) }),
+            {}
+          )
+        );
       }
     }
   },
@@ -56,7 +61,7 @@ const types = [
     default: "replace",
 
     merge: {
-      merge(merger, a, b) {
+      merge(merger, config, a, b) {
         const result = [];
 
         for (let i = 0; i < Math.max(a.length, b.length); i += 1) {
@@ -66,12 +71,12 @@ const types = [
         return result;
       },
 
-      replace(merger, a, b) {
-        return nanoclone(b);
+      replace(merger, config, a, b) {
+        return set(config.force, b);
       },
 
-      concat(merger, a, b) {
-        return [].concat(a).concat(b);
+      concat(merger, config, a, b) {
+        return set(config.force, [...a, ...b]);
       }
     }
   }

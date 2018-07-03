@@ -1,5 +1,7 @@
 function normalizeConfig(config) {
   return {
+    force: config.force || false,
+
     strategy: config.strategy || {},
 
     types: {

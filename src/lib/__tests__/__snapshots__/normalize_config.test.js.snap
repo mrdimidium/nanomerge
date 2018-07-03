@@ -2,6 +2,7 @@
 
 exports[`Must return default config 1`] = `
 Object {
+  "force": false,
   "strategy": Object {},
   "types": Object {
     "list": Array [],
@@ -12,11 +13,61 @@ Object {
 
 exports[`Must set user config 1`] = `
 Object {
+  "force": false,
   "strategy": Object {
     "array": "replace",
   },
   "types": Object {
     "list": Array [
+      Object {},
+    ],
+    "mode": "replace",
+  },
+}
+`;
+
+exports[`Must validate configuration Must set empty 1`] = `
+Object {
+  "force": false,
+  "strategy": Object {},
+  "types": Object {
+    "list": Array [],
+    "mode": "add",
+  },
+}
+`;
+
+exports[`Must validate configuration Must set force 1`] = `
+Object {
+  "force": true,
+  "strategy": Object {},
+  "types": Object {
+    "list": Array [],
+    "mode": "add",
+  },
+}
+`;
+
+exports[`Must validate configuration Must set strategy 1`] = `
+Object {
+  "force": false,
+  "strategy": Object {
+    "array": "replace",
+  },
+  "types": Object {
+    "list": Array [],
+    "mode": "add",
+  },
+}
+`;
+
+exports[`Must validate configuration Must set types 1`] = `
+Object {
+  "force": false,
+  "strategy": Object {},
+  "types": Object {
+    "list": Array [
+      Object {},
       Object {},
     ],
     "mode": "replace",

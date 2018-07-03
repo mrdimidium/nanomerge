@@ -78,16 +78,16 @@
   "size-limit": [
     {
       "path": "dist/nanomerge.cjs.js",
-      "limit": "850 B"
+      "limit": "1 KB"
     },
     {
       "path": "dist/nanomerge.es.js",
-      "limit": "850 B"
+      "limit": "1 KB"
     }
   ],
   "lint-staged": {
     "*.md": "yaspeller-ci",
-    "*.js": "eslint"
+    "*.js": "eslint --fix"
   },
   "pre-commit": [
     "lint-staged"

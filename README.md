@@ -60,6 +60,12 @@ myCustomMerge({ a: 1 }, { b: 2 }) //=> { a: 1, b: 2 }
 ```js
 var config = {
   /**
+  * If true, each item will be deeply copied,
+  * otherwise it will be copied as needed
+  */
+  force: true, // boolean
+
+  /**
    * The strategy specifies how we should handle a particular type
    */
   strategy: {
@@ -83,7 +89,7 @@ var config = {
          default: "simple", // The name of the mechanism of merging the default
 
          merge: { // The object contains all the mechanisms for draining this type
-           simple: function(merger, a, b) {},
+           simple: function(merger, a, b, config) {},
          }
        },
        /* You custom types */
