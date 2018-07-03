@@ -41,7 +41,7 @@
     "lint-staged": "lint-staged",
     "spellcheck": "npm run docs && yaspeller-ci *.md docs/*.html",
     "clean": "rimraf docs/ coverage/",
-    "docs": "jsdoc --configure .jsdocrc *.js",
+    "docs": "jsdoc --configure .jsdocrc src/*.js",
     "lint": "eslint {.,{src,test}{,/**}}/*.js",
     "lint:fix": "npm run lint -- --fix",
     "test": "jest --coverage && npm run lint && size-limit && npm run spellcheck"
