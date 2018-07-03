@@ -2,4 +2,6 @@ var Merge = require("./merge");
 
 var merger = new Merge();
 
-module.exports = merger.merge.bind(merger);
+module.exports = function nanomerge() {
+  return merger.merge.apply(merger, arguments);
+};

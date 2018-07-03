@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Must run Merge.merge 1`] = `
+Array [
+  Array [
+    Object {},
+    Object {},
+    Object {},
+  ],
+  Array [
+    Array [],
+    Array [],
+  ],
+  Array [
+    Array [],
+    Array [],
+    Object {},
+  ],
+]
+`;
+
+exports[`Must to create Merge 1`] = `
+Array [
+  Array [],
+]
+`;
