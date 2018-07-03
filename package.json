@@ -5,16 +5,15 @@
   "keywords": [],
   "author": "Nikolay Govorov <nikolay_govorov@bk.ru>",
   "license": "MIT",
-  "main": "src/index",
+  "main": "dist/nanomerge.cjs.js",
+  "module": "dist/nanomerge.es.js",
   "repository": "nikolay-govorov/nanomerge",
   "dependencies": {
-    "nanoclone": "^0.1.5",
-    "rollup-plugin-node-resolve": "^3.3.0"
+    "nanoclone": "^0.1.5"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-jest": "^23.2.0",
-    "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-env": "^1.7.0",
     "benchmark": "^2.1.4",
     "chalk": "^2.3.2",
@@ -33,7 +32,10 @@
     "rimraf": "^2.6.2",
     "rollup": "^0.62.0",
     "rollup-plugin-babel": "^3.0.7",
+    "rollup-plugin-node-resolve": "^3.3.0",
+    "rollup-plugin-uglify": "^4.0.0",
     "size-limit": "^0.13.2",
+    "uglify-js": "^3.4.3",
     "yaspeller-ci": "^1.0.0"
   },
   "scripts": {
@@ -43,8 +45,7 @@
     "spellcheck": "npm run docs && yaspeller-ci *.md docs/*.html",
     "clean": "rimraf docs/ coverage/ dist/",
     "docs": "jsdoc --configure .jsdocrc src/**/*.js",
-    "lint": "eslint {.,{src,test}{,/**}}/*.js",
-    "lint:fix": "npm run lint -- --fix",
+    "lint": "eslint {.,{src,test}{,/**}}/*.js --fix",
     "test": "npm run build && jest --coverage && npm run lint && size-limit && npm run spellcheck"
   },
   "jest": {
@@ -75,8 +76,12 @@
   },
   "size-limit": [
     {
-      "path": "src/index.js",
-      "limit": "800 B"
+      "path": "dist/nanomerge.cjs.js",
+      "limit": "850 B"
+    },
+    {
+      "path": "dist/nanomerge.es.js",
+      "limit": "850 B"
     }
   ],
   "lint-staged": {

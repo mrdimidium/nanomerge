@@ -1,5 +1,6 @@
-import babel from "rollup-plugin-babel";
 import resolve from "rollup-plugin-node-resolve";
+
+import pkg from "./package.json";
 
 export default {
   input: "src/index.js",
@@ -8,21 +9,14 @@ export default {
 
   output: [
     {
-      file: "dist/nanomerge.cjs.js",
+      file: pkg.main,
       format: "cjs"
     },
     {
-      file: "dist/nanomerge.es6.js",
+      file: pkg.module,
       format: "es"
     }
   ],
 
-  plugins: [
-    resolve(),
-    babel({
-      babelrc: false,
-      presets: [["env", { modules: false }]],
-      plugins: ["external-helpers"]
-    })
-  ]
+  plugins: [resolve()]
 };
