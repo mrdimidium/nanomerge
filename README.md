@@ -48,11 +48,11 @@ nanomerge({ a: 1, b: 2 }, { a: 2, c: 3 }, { b: 5, d: 7 }); //=> { a: 2, b: 5, c:
 If passed only one parameter, it is interpreted as configuration data, and a customized merge function is returned.
 
 ```js
-var Merge = require('nanomerge/merge');
+var nanomerge = require('nanomerge');
 
-var myCustomMerger = new Merge({ /* options */ });
+var myCustomMerge = nanomerge.create({ /* options */ });
 
-myCustomMerger.merge({ a: 1 }, { b: 2 }) //=> { a: 1, b: 2 }
+myCustomMerge({ a: 1 }, { b: 2 }) //=> { a: 1, b: 2 }
 ```
 
 ### Configuration
